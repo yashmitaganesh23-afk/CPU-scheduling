@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Process Scheduling Visualization System</title>
+
+    <!-- Chart.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div>
+        <div class="eyebrow">
+            OPERATING SYSTEMS • CAPSTONE PROJECT
+        </div>
+
+        <h1>
+            Process Scheduling
+            <span>Visualization System</span>
+        </h1>
+
+        <p class="subtitle">
+            Interactive CPU scheduling simulator with
+            process generation, Gantt charts, LED visualization
+            and performance analysis.
+        </p>
+    </div>
+
+    <div class="status-box">
+        <div class="status-dot"></div>
+
+        <div>
+            <small>SYSTEM STATUS</small>
+            <strong id="systemStatus">READY</strong>
+        </div>
+    </div>
+
+</header>
+
+
+<main>
+
+    <!-- =====================================================
+         MODULE 1
+    ====================================================== -->
+
+    <section class="card">
+
+        <div class="module-title">
+
+            <div>
+                <div class="section-label">
+                    MODULE 01
+                </div>
+
+                <h2>
+                    Intelligent Process Generator
+                </h2>
+            </div>
+
+            <div class="module-number">
+                01
+            </div>
+
+        </div>
+
+        <p class="description">
+            Generate CPU process details including Process ID,
+            Arrival Time, Burst Time and Priority.
+        </p>
+
+
+        <div class="generator-controls">
+
+            <button
+                id="generateProcesses"
+                class="primary-button">
+
+                Generate Random Processes
+
+            </button>
+
+            <button
+                id="resetProcesses"
+                class="secondary-button">
+
+                Reset Example
+
+            </button>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>PID</th>
+                        <th>Arrival Time</th>
+                        <th>Burst Time</th>
+                        <th>Priority</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="processTable">
+
+                    <tr>
+
+                        <td>
+                            <span class="pid p1">P1</span>
+                        </td>
+
+                        <td>
+                            <input
+                                class="arrival"
+                                type="number"
+                                value="0"
+                                min="0">
+                        </td>
+
+                        <td>
+                            <input
+                                class="burst"
+                                type="number"
+                                value="5"
+                                min="1">
+                        </td>
+
+                        <td>
+                            <input
+                                class="priority"
+                                type="number"
+                                value="2"
+                                min="1">
+                        </td>
+
+                        <td>
+                            <button class="delete-button">
+                                ×
+                            </button>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <span class="pid p2">P2</span>
+                        </td>
+
+                        <td>
+                            <input
+                                class="arrival"
+                                type="number"
+                                value="1"
+                                min="0">
+                        </td>
+
+                        <td>
+                            <input
+                                class="burst"
+                                type="number"
+                                value="3"
+                                min="1">
+                        </td>
+
+                        <td>
+                            <input
+                                class="priority"
+                                type="number"
+                                value="1"
+                                min="1">
+                        </td>
+
+                        <td>
+                            <button class="delete-button">
+                                ×
+                            </button>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <span class="pid p3">P3</span>
+                        </td>
+
+                        <td>
+                            <input
+                                class="arrival"
+                                type="number"
+                                value="2"
+                                min="0">
+                        </td>
+
+                        <td>
+                            <input
+                                class="burst"
+                                type="number"
+                                value="4"
+                                min="1">
+                        </td>
+
+                        <td>
+                            <input
+                                class="priority"
+                                type="number"
+                                value="3"
+                                min="1">
+                        </td>
+
+                        <td>
+                            <button class="delete-button">
+                                ×
+                            </button>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <span class="pid p4">P4</span>
+                        </td>
+
+                        <td>
+                            <input
+                                class="arrival"
+                                type="number"
+                                value="3"
+                                min="0">
+                        </td>
+
+                        <td>
+                            <input
+                                class="burst"
+                                type="number"
+                                value="2"
+                                min="1">
+                        </td>
+
+                        <td>
+                            <input
+                                class="priority"
+                                type="number"
+                                value="2"
+                                min="1">
+                        </td>
+
+                        <td>
+                            <button class="delete-button">
+                                ×
+                            </button>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <button
+            id="addProcess"
+            class="add-button">
+
+            + Add Process
+
+        </button>
+
+    </section>
+
+
+    <!-- =====================================================
+         MODULE 2
+    ====================================================== -->
+
+    <section class="card">
+
+        <div class="module-title">
+
+            <div>
+
+                <div class="section-label">
+                    MODULE 02
+                </div>
+
+                <h2>
+                    Adaptive Scheduling Decision Engine
+                </h2>
+
+            </div>
+
+            <div class="module-number">
+                02
+            </div>
+
+        </div>
+
+
+        <p class="description">
+
+            Select and apply a CPU scheduling algorithm.
+            The system generates the execution sequence
+            and Gantt chart.
+
+        </p>
+
+
+        <div class="scheduler-controls">
+
+            <div class="control-group">
+
+                <label>
+                    Scheduling Algorithm
+                </label>
+
+                <select id="algorithm">
+
+                    <option value="fcfs">
+                        FCFS — First Come First Serve
+                    </option>
+
+                    <option value="sjf">
+                        SJF — Shortest Job First
+                    </option>
+
+                    <option value="rr">
+                        Round Robin
+                    </option>
+
+                    <option value="priority">
+                        Priority Scheduling
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="control-group">
+
+                <label>
+                    Time Quantum
+                </label>
+
+                <input
+                    id="quantum"
+                    type="number"
+                    value="2"
+                    min="1">
+
+            </div>
+
+
+            <div class="control-group">
+
+                <label>
+                    Animation Speed
+                </label>
+
+                <select id="speed">
+
+                    <option value="1200">
+                        Slow
+                    </option>
+
+                    <option
+                        value="700"
+                        selected>
+                        Normal
+                    </option>
+
+                    <option value="300">
+                        Fast
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="control-buttons">
+
+            <button
+                id="startButton"
+                class="primary-button">
+
+                ▶ Start
+
+            </button>
+
+            <button
+                id="pauseButton"
+                class="secondary-button">
+
+                ⏸ Pause
+
+            </button>
+
+            <button
+                id="stepButton"
+                class="secondary-button">
+
+                ⏭ Step
+
+            </button>
+
+            <button
+                id="resetButton"
+                class="danger-button">
+
+                ↻ Reset
+
+            </button>
+
+        </div>
+
+
+        <div class="cpu-panel">
+
+            <div class="cpu-info">
+
+                <span>CURRENT CPU PROCESS</span>
+
+                <strong id="currentProcess">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="cpu-info">
+
+                <span>CURRENT TIME</span>
+
+                <strong id="currentTime">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="cpu-info">
+
+                <span>SELECTED ALGORITHM</span>
+
+                <strong id="selectedAlgorithm">
+                    FCFS
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         GANTT CHART
+    ====================================================== -->
+
+    <section class="card">
+
+        <div class="section-label">
+            CPU EXECUTION TIMELINE
+        </div>
+
+        <h2>
+            Gantt Chart
+        </h2>
+
+        <p class="description">
+            Visual representation of process execution sequence.
+        </p>
+
+
+        <div class="gantt-wrapper">
+
+            <div
+                id="ganttChart"
+                class="gantt-chart">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MODULE 3
+    ====================================================== -->
+
+    <section class="card">
+
+        <div class="module-title">
+
+            <div>
+
+                <div class="section-label">
+                    MODULE 03
+                </div>
+
+                <h2>
+                    Interactive Hardware Visualization
+                </h2>
+
+            </div>
+
+            <div class="module-number">
+                03
+            </div>
+
+        </div>
+
+
+        <p class="description">
+
+            Software simulation of the Arduino and LED
+            visualization. Each LED represents a process.
+
+        </p>
+
+
+        <div
+            id="ledBoard"
+            class="led-board">
+
+        </div>
+
+
+        <div class="legend">
+
+            <div>
+                <span class="legend-led running"></span>
+                Running
+            </div>
+
+            <div>
+                <span class="legend-led ready"></span>
+                Ready
+            </div>
+
+            <div>
+                <span class="legend-led completed"></span>
+                Completed
+            </div>
+
+            <div>
+                <span class="legend-led waiting"></span>
+                Not Arrived
+            </div>
+
+        </div>
+
+
+        <div class="queue-section">
+
+            <h3>
+                Ready Queue
+            </h3>
+
+            <div
+                id="readyQueue"
+                class="ready-queue">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MODULE 4
+    ====================================================== -->
+
+    <section class="card">
+
+        <div class="module-title">
+
+            <div>
+
+                <div class="section-label">
+                    MODULE 04
+                </div>
+
+                <h2>
+                    Scheduling Performance Analyzer
+                </h2>
+
+            </div>
+
+            <div class="module-number">
+                04
+            </div>
+
+        </div>
+
+
+        <p class="description">
+
+            Calculate and compare scheduling performance
+            using tables and graphs.
+
+        </p>
+
+
+        <!-- METRICS -->
+
+        <div class="metric-grid">
+
+            <div class="metric-card">
+
+                <span>
+                    Average Waiting Time
+                </span>
+
+                <strong id="avgWaiting">
+                    0.00
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Average Turnaround Time
+                </span>
+
+                <strong id="avgTurnaround">
+                    0.00
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    CPU Utilization
+                </span>
+
+                <strong id="cpuUtilization">
+                    0%
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Throughput
+                </span>
+
+                <strong id="throughput">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Context Switches
+                </span>
+
+                <strong id="contextSwitches">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card best">
+
+                <span>
+                    Most Efficient Algorithm
+                </span>
+
+                <strong id="bestAlgorithm">
+                    —
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROCESS RESULTS -->
+
+        <h3 class="subheading">
+            Process Performance
+        </h3>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>PID</th>
+                        <th>Completion Time</th>
+                        <th>Turnaround Time</th>
+                        <th>Waiting Time</th>
+                        <th>Response Time</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="resultsTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- GRAPH -->
+
+        <h3 class="subheading">
+            Algorithm Performance Comparison
+        </h3>
+
+
+        <div class="chart-container">
+
+            <canvas
+                id="performanceChart">
+
+            </canvas>
+
+        </div>
+
+
+        <!-- COMPARISON TABLE -->
+
+        <h3 class="subheading">
+            Algorithm Comparison Table
+        </h3>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Algorithm</th>
+                        <th>Avg Waiting</th>
+                        <th>Avg Turnaround</th>
+                        <th>CPU Utilization</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="comparisonTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <strong>
+        Process Scheduling Visualization System
+    </strong>
+
+    <span>
+        Operating Systems Capstone Project
+    </span>
+
+    <span>
+        FCFS • SJF • Round Robin • Priority
+    </span>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
